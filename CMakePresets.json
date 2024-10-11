@@ -1,0 +1,77 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "macos",
+      "displayName": "macOS",
+      "description": "Xcode project for macOS",
+      "generator": "Xcode",
+      "binaryDir": "${sourceDir}/_build",
+      "cacheVariables": {
+        "QT_DIR": "/opt/homebrew/opt/qt/lib/cmake/Qt6",
+        "CMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED": false,
+        "CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY": "",
+        "CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_STYLE": "Manual"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "macos",
+      "displayName": "macOS",
+      "configurePreset": "macos",
+      "description": "Release build with Xcode for macOS",
+      "targets": ["ProjectTemplateApp"],
+      "configuration": "Release",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    }
+  ],
+  "packagePresets": [
+    {
+      "name": "macos",
+      "displayName": "macOS",
+      "configurePreset": "macos",
+      "description": "DMG packaging for macOS",
+      "generators": ["DragNDrop"],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "macos",
+      "displayName": "macOS",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "macos"
+        },
+        {
+          "type": "build",
+          "name": "macos"
+        },
+        {
+          "type": "package",
+          "name": "macos"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+name: MacOS
+
+on:
+  push:
+    branches:
+      - master
+      - dev
+  pull_request:
+    branches:
+      - master
+      - dev
+
+jobs:
+  build:
+    runs-on: macos-13
+
+    steps:
+      - name: Check Out
+        uses: actions/checkout@v4
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          aqtversion: '==3.1.*'
+          version: '6.8.0'
+          host: 'mac'
+          target: 'desktop'
+          arch: 'clang_64'
+
+      - name: Configure, build, test and package.
+        run: cmake --workflow --preset macos
