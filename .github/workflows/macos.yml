@@ -27,5 +27,11 @@ jobs:
           target: 'desktop'
           arch: 'clang_64'
 
-      - name: Configure, build, test and package.
+      - name: Configure, build, test and package as DMG.
         run: cmake --workflow --preset macos
+
+      - name: Upload DMG as artifact.
+        uses: actions/upload-artifact@v4
+        with:
+          name: ProjectTemplate.dmg
+          path: _build/*.dmg
